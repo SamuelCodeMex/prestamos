@@ -4,14 +4,16 @@
 	<!-- popper -->
 	<script src="<?php echo SERVERURL;?>view/js/popper.min.js" ></script>
 
-	<!-- Bootstrap V4.3 -->
-	<script src="<?php echo SERVERURL;?>view/js/bootstrap.min.js" ></script>
+	
 
 	<!-- jQuery Custom Content Scroller V3.1.5 -->
 	<script src="<?php echo SERVERURL;?>view/js/jquery.mCustomScrollbar.concat.min.js" ></script>
+	<!-- Bootstrap V4.3 -->
+	<script src="<?php echo SERVERURL;?>view/js/bootstrap.min.js" ></script>
 
 	<!-- Bootstrap Material Design V4.0 -->
 	<script src="<?php echo SERVERURL;?>view/js/bootstrap-material-design.min.js" ></script>
 	<script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
 
 	<script src="<?php echo SERVERURL;?>view/js/main.js" ></script>
+	<script src="<?php echo SERVERURL;?>view/js/alertas.js" ></script>

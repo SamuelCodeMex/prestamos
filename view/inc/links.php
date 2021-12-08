@@ -1,12 +1,11 @@
+	
+	<!-- jQuery Custom Content Scroller V3.1.5 -->
+	<link rel="stylesheet" href="<?php echo SERVERURL;?>view/css/jquery.mCustomScrollbar.css">
 	<!-- Normalize V8.0.1 -->
-	<link rel="stylesheet" href="<?php echo SERVERURL;?>css/normalize.css">
+	<link rel="stylesheet" href="<?php echo SERVERURL;?>view/css/normalize.css">
 
 	<!-- Bootstrap V4.3 -->
-	<link rel="stylesheet" href="<?php echo SERVERURL;?>css/bootstrap.min.css">
-
-	<!-- Bootstrap Material Design V4.0 -->
-	<link rel="stylesheet" href="<?php echo SERVERURL;?>view/css/bootstrap-material-design.min.css">
-
+	<link rel="stylesheet" href="<?php echo SERVERURL;?>view/css/bootstrap.min.css">
 	<!-- Font Awesome V5.9.0 -->
 	<link rel="stylesheet" href="<?php echo SERVERURL;?>view/css/all.css">
 
@@ -15,9 +14,5 @@
 
 	<!-- Sweet Alert V8.13.0 JS file-->
 	<script src="<?php echo SERVERURL;?>view/js/sweetalert2.min.js" ></script>
-
-	<!-- jQuery Custom Content Scroller V3.1.5 -->
-	<link rel="stylesheet" href="<?php echo SERVERURL;?>view/css/jquery.mCustomScrollbar.css">
-	
 	<!-- General Styles -->
 	<link rel="stylesheet" href="<?php echo SERVERURL;?>view/css/style.css">
