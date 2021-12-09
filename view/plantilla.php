@@ -8,8 +8,9 @@
 </head>
 <body>
 	<?php
+    error_log('preparando plantilla');
 	$peticionAjax=false;
-	require_once './controllers/vistaController.php';
+	require_once './controllers/VistaController.php';
 	$vi = new vistaController();
 	$plant = $vi->getVistasController();
 	if($plant == "login" || $plant == "404"){

@@ -1,14 +1,16 @@
 <?php
 if($peticionAjax){//una carpeta arriba si es petición ajax
-    require_once "../config/SEERVER.php";  //desde la carpeta ajax
+    require_once "../config/SERVER.php";  //desde la carpeta ajax
 }else{
     require_once "./config/SEERVER.php"; //desde index.php
 }
-class mainModel{
+class MainModel{
     protected static function conectarDb(){
-        $conexion = new PDO(SGBD, USER, PASS);
-        $conexion->exec("SET CHARACTER SET utf8");
+        
+        $conexion = new PDO('mysql:host=localhost;dbname=prestamos','root', '');
+        //$conexion->exec("SET CHARACTER SET utf8");
         return $conexion;
+      
     } 
     protected static function querySimple($consulta){
         $sql =self::conectarDb()->prepare($consulta);

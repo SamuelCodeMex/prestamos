@@ -1,5 +1,5 @@
 <?php
-class vistaModel{
+class VistaModel{
     protected static function getVistasModel($vistas){
         //list white of words in views, only access of url;
         $listaBlanca = ["home","client-list","client-new","reservation-new",
