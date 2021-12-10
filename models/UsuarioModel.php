@@ -4,7 +4,6 @@ require_once "mainModel.php";
 class UsuarioModel extends mainModel{
     //agregar usuario
     protected static function agregarUsuarioModel($datos){
-        error_log("Dentro de agregarUsuarioModel");
         try {
             $mbd = MainModel::conectarDb();
             $sql = $mbd->prepare("INSERT INTO usuarios(usuario_nombre,usuario_apellido,
