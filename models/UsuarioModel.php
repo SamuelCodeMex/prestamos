@@ -5,7 +5,6 @@ class UsuarioModel extends mainModel{
     //agregar usuario
     protected static function agregarUsuarioModel($datos){
         error_log("Dentro de agregarUsuarioModel");
-        error_log(json_encode($datos));
         try {
             $mbd = MainModel::conectarDb();
             $sql = $mbd->prepare("INSERT INTO usuarios(usuario_nombre,usuario_apellido,
@@ -32,6 +31,7 @@ class UsuarioModel extends mainModel{
         } catch (PDOException $e) {
             error_log( $e->getMessage());
             die();
+            return false;
         }
     }
 }

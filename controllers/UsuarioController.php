@@ -9,7 +9,6 @@ class UsuarioController extends UsuarioModel{
     public function agregarUsuarioController(){
         //los datos post los obtenemos gracias que hacemos 
         //include en ajax/usuarioAjax.php
-        error_log('agregarUsuarioController metodo');
         $nombre = MainModel::cleanString($_POST['usuario_nombre_reg']);
         $apellido = MainModel::cleanString($_POST['usuario_apellido_reg']);
         $telefono = MainModel::cleanString($_POST['usuario_telefono_reg']);
@@ -19,18 +18,9 @@ class UsuarioController extends UsuarioModel{
         $clave_1 = MainModel::cleanString($_POST['usuario_clave_1_reg']);
         $clave_2 = MainModel::cleanString($_POST['usuario_clave_2_reg']);
         $privilegio = MainModel::cleanString($_POST['usuario_privilegio_reg']);
-                                                     
-        error_log('$nombre::'.$nombre);
-        error_log('$apellido::'.$apellido);
-        error_log('$telefono::'.$telefono);
-        error_log('$usuario::'.$usuario);
-        error_log('$clave_1::'.$clave_1);
-        error_log('$clave_2::'.$clave_2);
-        error_log('$privilegio::'.$privilegio);
-        error_log('vamos por el if');
+                                                
         //comprobar que tengan texto
         if($nombre == '' ||  $apellido== '' ||  $usuario == '' ||  $clave_1== '' ||  $clave_2== ''){
-            error_log('enviando alerta');
             $alerta = [
                 "Alerta" => 'simple',
                 "Tipo" => 'error',
@@ -65,7 +55,6 @@ class UsuarioController extends UsuarioModel{
             exit();
         }
         if($telefono != ""){
-            error_log('si hay teléfono');
             if (MainModel::checkDat('[0-9]{8,20}',$telefono)) {
                 $alerta = [
                     "Alerta" => 'simple',
