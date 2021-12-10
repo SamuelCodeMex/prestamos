@@ -30,7 +30,7 @@ $(document).ready(function(){
 		}
 	});
 
-	/*  Exit system buttom */
+	/*  Exit system buttom sustituido en view/inc/outLog.php
 	$('.btn-exit-system').on('click', function(e){
 		e.preventDefault();
 		Swal.fire({
@@ -47,7 +47,7 @@ $(document).ready(function(){
 				window.location="index.html";
 			}
 		});
-	});
+	});*/
     
 });
 (function($){

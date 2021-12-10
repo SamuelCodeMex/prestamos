@@ -16,6 +16,15 @@
 	if($plant == "login" || $plant == "404"){
 		require_once "./view/contenidos/".$plant."-view.php";
 	}else{
+		session_start(['name' => 'HMN']);
+		require_once './controllers/LoginController.php';
+		$lo = new LoginController();
+		if(!isset($_SESSION['hmn_token']) || !isset($_SESSION['hmn_id']) ||
+		   !isset($_SESSION['hmn_privilegio']) || !isset($_SESSION['hmn_usuario'])){
+			echo $lo->fCierreSessionController();
+			exit();
+		}
+		
 	?>
 	<!-- Main container -->
 	<main class="full-box main-container">
@@ -37,6 +46,9 @@
 	<!--=============================================
 	=            Include JavaScript files           =
 	==============================================-->
-    <?php } include './view/inc/script.php';?>
+    <?php 
+	   include './view/inc/outLog.php';
+    }
+	 include './view/inc/script.php';?>
 </body>
 </html>

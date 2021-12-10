@@ -2,7 +2,7 @@
 if($peticionAjax){//una carpeta arriba si es petición ajax
     require_once "../config/SERVER.php";  //desde la carpeta ajax
 }else{
-    require_once "./config/SEERVER.php"; //desde index.php
+    require_once "./config/SERVER.php"; //desde index.php
 }
 class MainModel{
     protected static function conectarDb(){
