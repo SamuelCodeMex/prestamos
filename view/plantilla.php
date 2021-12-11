@@ -17,6 +17,8 @@
 		require_once "./view/contenidos/".$plant."-view.php";
 	}else{
 		session_start(['name' => 'HMN']);
+		$pagina = explode("/",$_GET['views']);
+		
 		require_once './controllers/LoginController.php';
 		$lo = new LoginController();
 		if(!isset($_SESSION['hmn_token']) || !isset($_SESSION['hmn_id']) ||

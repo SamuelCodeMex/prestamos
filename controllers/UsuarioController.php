@@ -222,8 +222,106 @@ class UsuarioController extends UsuarioModel{
             echo json_encode($alerta);
             exit();
         }
-        
+    }
 
+    public function paginadorUsuarioController($pagina,$regis,$privil,$id,$url,$busqueda){
+        $pagina = MainModel::cleanString($pagina);
+        $regis = MainModel::cleanString($regis);
+        $privil = MainModel::cleanString($privil);
+        $url = MainModel::cleanString($url);
+        $url = SERVERURL.$url."/";
+        $busqueda = MainModel::cleanString($busqueda);
+        error_log('$busqueda::'.$busqueda);
+        error_log('$regis::'.$busqueda);error_log('$privil::'.$privil);error_log('$url::'.$url);
         
+        $tabla = "";
+        $pagina = (isset($pagina) && $pagina>0) ? (int) $pagina: 1;
+        $inicio = ($pagina>0)? (($pagina*$regis)-$regis) : 0;
+        error_log('$pagina::'.$pagina);
+        error_log('$inicio::'.$inicio);
+        error_log("--------------------");
+        if (isset($busqueda) && $busqueda != "") {
+           // if(false){
+            $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM usuarios WHERE ((usuario_id != '$id'
+                         AND usuario_id != '1') AND  (usuario_nombre LIKE '%$busqueda%' 
+                         OR usuario_apellido LIKE '%$busqueda%' 
+                         OR usuario_usuario LIKE '%$busqueda%')) 
+                         ORDER BY usuario_nombre ASC LIMIT $inicio,$regis";
+        } else {      //cuenta la cantidad de registros de los usuarios
+            $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM usuarios WHERE usuario_id != '$id'
+                         AND usuario_id != '1' ORDER BY usuario_nombre ASC LIMIT $inicio,$regis";
+            //$consulta = "SELECT * FROM usuarios";
+        }
+        $conexion = MainModel::conectarDb();
+        $datos = $conexion->query($consulta);
+        error_log(json_encode($datos));
+        $datos = $datos->fetchAll();
+
+        $total = $conexion->query("SELECT FOUND_ROWS()");
+        $total = (int) $total->fetchColumn();
+
+        $Npaginas = ceil($total/$regis);
+        $tabla .= '
+        <div class="table-responsive">
+        <table class="table table-dark table-sm">
+            <thead>
+                <tr class="text-center roboto-medium">
+                    <th>#</th>
+                    <th>NOMBRE</th>
+                    <th>TELÉFONO</th>
+                    <th>USUARIO</th>
+                    <th>EMAIL</th>
+                    <th>ACTUALIZAR</th>
+                    <th>ELIMINAR</th>
+                </tr>
+            </thead>
+            <tbody>';
+        if ($total>=1 && $pagina < $Npaginas) {
+            $contador = $inicio+1;
+            foreach($datos as $fila){
+                $tabla .='
+            <tr class="text-center" >
+                <td>'.$contador.'</td>
+                <td>'.$fila['usuario_nombre'].' '.$fila['usuario_apellido'].'</td>
+                <td>'.$fila['usuario_telefono'].'</td>
+                <td>'.$fila['usuario_usuario'].'</td>
+                <td>'.$fila['usuario_email'].'</td>
+                <td>
+                    <a href="<?php echo SERVERURL;?>user-update/" class="btn btn-success">
+                        <i class="fas fa-sync-alt"></i>	
+                    </a>
+                </td>
+                <td>
+                    <form action="">
+                        <button type="button" class="btn btn-warning">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>';
+            $contador++;
+            }
+           
+        } else {
+            if ($total>=1) {
+                $tabla .='<tr class="text-center" >
+                <td colspan=8>
+                <a href="'.$url.'" class="btn btn-raised btn-primary btn-sm">Haga clic aquí para recargar el registro></a>
+                </td>
+                </tr>';
+            } else {
+                $tabla .='<tr class="text-center" >
+                <td colspan=8>No hay registros en el sistema</td>
+                </tr>';
+            }
+        }
+        $tabla .='
+            </tbody>
+            </table>
+        </div>'; 
+        if ($total>=1 && $pagina < $Npaginas) {
+            $tabla .= MainModel::paginarTabla($pagina,$Npaginas,$url,7); 
+        }
+        return $tabla;   
     }
 }
