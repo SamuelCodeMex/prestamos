@@ -223,7 +223,7 @@ class UsuarioController extends UsuarioModel{
             exit();
         }
     }
-
+    //muestra el numero de registros en la tabla
     public function paginadorUsuarioController($pagina,$regis,$privil,$id,$url,$busqueda){
         $pagina = MainModel::cleanString($pagina);
         $regis = MainModel::cleanString($regis);

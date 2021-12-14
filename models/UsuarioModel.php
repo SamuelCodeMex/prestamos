@@ -20,9 +20,8 @@ class UsuarioModel extends mainModel{
             $sql->bindParam(":Clave",$datos['Clave']);
             $sql->bindParam(":Estado",$datos['Estado']);
             $sql->bindParam(":Privilegio",$datos['Privilegio']);
-            $sql->execute();
-            $lastInsertId = $mbd->lastInsertId();
-            if($lastInsertId <= 0){
+            
+            if(!$sql->execute()){
                 error_log(json_encode($sql->errorInfo()));
                 return false;
             }
