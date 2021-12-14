@@ -29,6 +29,6 @@
     $ins_usu = new UsuarioController();
     //$pagina[1] en view/plantilla.php $pagina = explode("/",$_GET['views']);
     //$_SESSION['hmn_privilegio'] obtenida de LoginController
-    echo $ins_usu->paginadorUsuarioController($pagina[1],2,$_SESSION['hmn_privilegio'],$_SESSION['hmn_id'],$pagina[0],"");
+    echo $ins_usu->paginadorUsuarioController($pagina[1],5,$_SESSION['hmn_privilegio'],$_SESSION['hmn_id'],$pagina[0],"");
     ?>
     </div>

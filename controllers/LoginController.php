@@ -17,7 +17,7 @@ class LoginController extends LoginModel{
                 text: 'Revise los campos',
                 type: 'error',
                 confirmButtonText: 'Aceptar'
-            });
+            })
             </script>";
             exit();
        }
@@ -26,7 +26,7 @@ class LoginController extends LoginModel{
             echo "<script>
             Swal.fire({
                 title: 'Ócurrio un error inesperado.',
-                text: 'Revise el campo USUARIO',
+                text: 'Revise el campo USUARIO formato no válido',
                 type: 'error',
                 confirmButtonText: 'Aceptar'
             });
@@ -38,10 +38,11 @@ class LoginController extends LoginModel{
             echo "<script>
             Swal.fire({
                 title: 'Ócurrio un error inesperado.',
-                text: 'Revise el campo CONTRASEÑA',
+                text: 'Revise el campo CONTRASEÑA formato no válido',
                 type: 'error',
                 confirmButtonText: 'Aceptar'
             });
+            
             </script>";
             exit();
         }
@@ -65,7 +66,7 @@ class LoginController extends LoginModel{
             echo "<script>
             Swal.fire({
                 title: 'Ócurrio un error inesperado.',
-                text: 'USUARIO O CLAVE son incorrectos.',
+                text: 'USUARIO O CONTRASEÑA son incorrectos.',
                 type: 'error',
                 confirmButtonText: 'Aceptar'
             });

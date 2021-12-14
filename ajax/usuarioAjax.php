@@ -2,12 +2,14 @@
 error_log('En usuarioAjax.php');
 $peticionAjax = true; 
 require_once "../config/app.php";
-if (isset($_POST['usuario_nombre_reg'])) { //tiene session
-    error_log('deifinido::'.$_POST['usuario_nombre_reg']);
+if (isset($_POST['usuario_nombre_reg']) || isset($_POST['usuario_id'])) { //tiene session
     require_once "../controllers/UsuarioController.php";
     $ins_usuario = new UsuarioController();
     if(isset($_POST['usuario_nombre_reg']) && isset($_POST['usuario_apellido_reg'])){
         echo $ins_usuario->agregarUsuarioController();
+    }
+    if(isset($_POST['usuario_id'])){
+        echo $ins_usuario->eliminarUsuarioController();
     }
 } else { //intentan ingresar sin session
     error_log('No definido');

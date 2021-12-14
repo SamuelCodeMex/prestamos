@@ -32,4 +32,13 @@ class UsuarioModel extends mainModel{
             return false;
         }
     }
+
+    protected static function eliminarUsuarioModel($id){
+        $sql = MainModel::conectarDb()->prepare("DELETE FROM usuarios WHERE usuario_id = :id");
+        $sql->bindParam(":id", $id);
+        if($sql->execute()){
+            error_log('No se puede eliminar');
+        }
+        return $sql;
+    }
 }

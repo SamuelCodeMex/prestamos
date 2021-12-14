@@ -10,9 +10,7 @@ class LoginModel extends mainModel{
             usuario_clave = :Clave AND usuario_estado = 0");
             $sql->bindParam(":Usuario",$datos['Usuario']);
             $sql->bindParam(":Clave",$datos['Clave']);
-            $sql->execute();
-            $lastInsertId = $mbd->lastInsertId();
-            if($lastInsertId <= 0){
+            if(!$sql->execute()){
                 error_log(json_encode($sql->errorInfo()));
                 return $sql;
             }

@@ -223,7 +223,7 @@ class UsuarioController extends UsuarioModel{
             exit();
         }
     }
-    //muestra el numero de registros en la tabla
+    //muestra la tabla con la lista de usuarios con paginacion
     public function paginadorUsuarioController($pagina,$regis,$privil,$id,$url,$busqueda){
         $pagina = MainModel::cleanString($pagina);
         $regis = MainModel::cleanString($regis);
@@ -276,8 +276,9 @@ class UsuarioController extends UsuarioModel{
                 </tr>
             </thead>
             <tbody>';
-        if ($total>=1 && $pagina < $Npaginas) {
+        if ($total>=1 && $pagina <= $Npaginas) {
             $contador = $inicio+1;
+            $regInicio = $inicio+1;
             foreach($datos as $fila){
                 $tabla .='
             <tr class="text-center" >
@@ -287,13 +288,14 @@ class UsuarioController extends UsuarioModel{
                 <td>'.$fila['usuario_usuario'].'</td>
                 <td>'.$fila['usuario_email'].'</td>
                 <td>
-                    <a href="<?php echo SERVERURL;?>user-update/" class="btn btn-success">
+                    <a href="'.SERVERURL.'user-update/'.MainModel::encryption($fila['usuario_id']).'/" class="btn btn-success">
                         <i class="fas fa-sync-alt"></i>	
                     </a>
                 </td>
                 <td>
-                    <form action="">
-                        <button type="button" class="btn btn-warning">
+                    <form class="formularioAjax" action="'.SERVERURL.'ajax/usuarioAjax.php" method="POST" data-form="delete" autocomplete="off">
+                        <input type="hidden" name="usuario_id" value="'.MainModel::encryption($fila['usuario_id']).'">
+                        <button type="submit" class="btn btn-warning">
                             <i class="far fa-trash-alt"></i>
                         </button>
                     </form>
@@ -301,7 +303,7 @@ class UsuarioController extends UsuarioModel{
             </tr>';
             $contador++;
             }
-           
+            $regFinal= $contador-1;
         } else {
             if ($total>=1) {
                 $tabla .='<tr class="text-center" >
@@ -319,9 +321,91 @@ class UsuarioController extends UsuarioModel{
             </tbody>
             </table>
         </div>'; 
-        if ($total>=1 && $pagina < $Npaginas) {
+        if($total>=1 && $pagina <= $Npaginas){
+            $tabla .= '<p class="text-right">Mostrando usuario '.$regInicio.' al '.$regFinal.' de un total de '.$total.' </p>';
+        
             $tabla .= MainModel::paginarTabla($pagina,$Npaginas,$url,7); 
         }
         return $tabla;   
+    }
+
+    public function eliminarUsuarioController(){
+        $id = MainModel::decryption($_POST['usuario_id']);
+        $id = MainModel::cleanString($id);
+        if($id == 1 ){
+            $alerta = [
+                "Alerta" => 'simple',
+                "Tipo" => 'error',
+                "Titulo" => 'Error al tratar de eliminar.',
+                "Texto" => 'No podemos eliminar el USUARIO.'
+            ];
+
+            echo json_encode($alerta);
+            exit();
+        }
+        //comprobar usuario en bd
+        $checkUsua = MainModel::querySimple("SELECT usuario_id FROM 
+                     usuarios WHERE usuario_id ='$id'");
+         if($checkUsua->rowCount()<=0){
+            $alerta = [
+                "Alerta" => 'simple',
+                "Tipo" => 'error',
+                "Titulo" => 'Error al tratar de eliminar.',
+                "Texto" => 'El USUARIO no existe en el sistema.'
+            ];
+
+            echo json_encode($alerta);
+            exit();
+         } 
+         //comprobando que no tenga prestamos 
+         $checkPres = MainModel::querySimple("SELECT usuario_id FROM 
+         prestamo WHERE usuario_id ='$id' LIMIT 1");
+            if($checkPres->rowCount()>0){
+            $alerta = [
+                "Alerta" => 'simple',
+                "Tipo" => 'error',
+                "Titulo" => 'Error al tratar de eliminar.',
+                "Texto" => 'El USUARIO presenta registro de prestamo.'
+            ];
+
+            echo json_encode($alerta);
+            exit();
+            } 
+            //comprobando privilegios
+            session_start(['name' => 'HMN']);
+            if($_SESSION['hmn_privilegio'] != 1){
+                $alerta = [
+                    "Alerta" => 'simple',
+                    "Tipo" => 'error',
+                    "Titulo" => 'Error al tratar de eliminar.',
+                    "Texto" => 'No posees privilegios para realizar esta operación.'
+                ];
+    
+                echo json_encode($alerta);
+                exit();
+            }
+            $elimiUsu = UsuarioModel::eliminarUsuarioModel($id); 
+            if($elimiUsu->rowCount() == 1){
+                $alerta = [
+                    "Alerta" => 'recargar',
+                    "Tipo" => 'success',
+                    "Titulo" => 'Realizado.',
+                    "Texto" => 'El USUARIO a sido eliminado el sistema.'
+                ];
+    
+                echo json_encode($alerta);
+                exit();
+            }else{
+                $alerta = [
+                    "Alerta" => 'simple',
+                    "Tipo" => 'error',
+                    "Titulo" => 'Error al tratar de eliminar.',
+                    "Texto" => 'Porfavor intente nuevamente.'
+                ];
+    
+                echo json_encode($alerta);
+                exit();
+
+            }        
     }
 }
