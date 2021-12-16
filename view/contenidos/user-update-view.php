@@ -3,6 +3,7 @@
 //el usuario puede hacer update si tiene el id y el privilegio 1
 if($lo->encryption($_SESSION['hmn_id']!= $pagina[1])){
     if($_SESSION['hmn_privilegio'] != 1 && $_SESSION['hmn_privilegio'] != 2){
+        
         echo $lo->fCierreSessionController();
         exit();
     }
