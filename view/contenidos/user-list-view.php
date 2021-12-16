@@ -1,3 +1,8 @@
+<?php 
+if($_SESSION['hmn_privilegio'] != 1){
+    echo $lo->fCierreSessionController();
+    exit();
+}?>
     <!-- Page header -->
     <div class="full-box page-header">
         <h3 class="text-left">
@@ -7,7 +12,8 @@
             Lorem ipsum .
         </p>
     </div>
-    
+    <?php 
+    if($_SESSION['hmn_privilegio'] != 1){?>
     <div class="container-fluid">
         <ul class="full-box list-unstyled page-nav-tabs">
             <li>
@@ -21,7 +27,7 @@
             </li>
         </ul>	
     </div>
-    
+    <?php }?>
     <!-- Content -->
     <div class="container-fluid">
     <?php 

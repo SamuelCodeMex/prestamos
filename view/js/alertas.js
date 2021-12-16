@@ -124,7 +124,7 @@ function enviar_formulario_ajax(e){
 	let texto_alerta;
 
 	if(tipo==="save"){
-		texto_alerta="Los datos quedaran guardados en el sistema";
+		texto_alerta="Los datos quedarán guardados en el sistema";
 	}else if(tipo==="delete"){
 		texto_alerta="Los datos serán eliminados completamente del sistema";
 	}else if(tipo==="update"){

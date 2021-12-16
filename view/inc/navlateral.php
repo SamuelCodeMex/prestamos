@@ -12,7 +12,7 @@
 				<nav class="full-box nav-lateral-menu">
 					<ul>
 						<li>
-							<a href="home.html"><i class="fab fa-dashcube fa-fw"></i> &nbsp; Dashboard</a>
+							<a href="<?php echo SERVERURL;?>home/"><i class="fab fa-dashcube fa-fw"></i> &nbsp; Dashboard</a>
 						</li>
 
 						<li>
@@ -65,7 +65,7 @@
 								</li>
 							</ul>
 						</li>
-
+						<?php if($_SESSION['hmn_privilegio']==1){?>
 						<li>
 							<a href="#" class="nav-btn-submenu"><i class="fas  fa-user-secret fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
 							<ul>
@@ -80,7 +80,7 @@
 								</li>
 							</ul>
 						</li>
-
+                        <?php }?>
 						<li>
 							<a href="<?php echo SERVERURL;?>company/"><i class="fas fa-store-alt fa-fw"></i> &nbsp; Empresa</a>
 						</li>

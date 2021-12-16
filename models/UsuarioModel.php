@@ -41,4 +41,52 @@ class UsuarioModel extends mainModel{
         }
         return $sql;
     }
+
+    protected static function datosUsuarioModel($tipo, $id){
+        if($tipo == "unico"){
+            $sql = MainModel::conectarDb()->prepare("SELECT * FROM usuarios 
+                          WHERE usuario_id = :Id");
+            $sql->bindParam(":Id", $id);
+
+        }else if($tipo == "conteo"){
+            $sql = MainModel::conectarDb()->prepare("SELECT usuario_id FROM usuarios 
+            WHERE usuario_id != '1'");
+        }
+        if(!$sql->execute()){
+            error_log('Error en consulta datosUsuario::');
+        }
+       
+        return $sql;
+    }
+
+    protected static function updateUsuarioModel($data){
+        error_log('Recibiendo de controller::'.json_encode($data));
+        $sql = MainModel::conectarDb()->prepare("UPDATE usuarios SET 
+            usuario_nombre = :nombre ,
+            usuario_apellido = :apellido,
+            usuario_telefono = :telefono,
+            usuario_direccion = :direccion,
+            usuario_email = :email,
+            usuario_usuario = :usuario,
+            usuario_clave = :clave,
+            usuario_estado = :estado,
+            usuario_privilegio = :privilegio 
+            WHERE usuario_id = :id");
+        $sql->bindParam(":nombre", $data['nombre']);
+        $sql->bindParam(":apellido", $data['apellido']);
+        $sql->bindParam(":telefono", $data['telefono']);
+        $sql->bindParam(":direccion", $data['direccion']);
+        $sql->bindParam(":email", $data['email']);
+        $sql->bindParam(":usuario", $data['usuario']);
+        $sql->bindParam(":clave", $data['clave']);
+        $sql->bindParam(":estado", $data['estado']);
+        $sql->bindParam(":privilegio", $data['privilegio']);
+        $sql->bindParam(":id", $data['id']);
+        if(!$sql->execute()){
+            error_log('Error en sql:No se puede actualizar usuario.');
+            return false;
+        }
+        return $sql;       
+
+    }
 }

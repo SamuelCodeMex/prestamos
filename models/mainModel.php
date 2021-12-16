@@ -14,7 +14,10 @@ class MainModel{
     } 
     protected static function querySimple($consulta){
         $sql =self::conectarDb()->prepare($consulta);
-        $sql->execute();
+        if(!$sql->execute()){
+           error_log('querySimple no ejecutada');
+        }
+        
         return $sql;
     }
     public function encryption($string){

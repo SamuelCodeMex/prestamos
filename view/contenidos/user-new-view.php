@@ -1,3 +1,8 @@
+<?php 
+if($_SESSION['hmn_privilegio'] != 1){
+    echo $lo->fCierreSessionController();
+    exit();
+}?>
     <!-- Page header -->
     <div class="full-box page-header">
         <h3 class="text-left">

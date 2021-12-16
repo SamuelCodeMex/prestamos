@@ -49,15 +49,20 @@
                 <p>700 Registrados</p>
             </div>
         </a>
-
+        <?php 
+        if($_SESSION['hmn_privilegio']==1){
+            require_once "./controllers/UsuarioController.php";
+            $insUs = new UsuarioController();
+            $totalUsuarios  = $insUs->datosUsuarioController("conteo",0);
+        ?>
         <a href="<?php echo SERVERURL;?>user-list/" class="tile">
             <div class="tile-tittle">Usuarios</div>
             <div class="tile-icon">
                 <i class="fas fa-user-secret fa-fw"></i>
-                <p>50 Registrados</p>
+                <p> <?php echo $totalUsuarios->rowCount();?> Registrados</p>
             </div>
         </a>
-
+        <?php }?>
         <a href="<?php echo SERVERURL;?>company/" class="tile">
             <div class="tile-tittle">Empresa</div>
             <div class="tile-icon">
