@@ -20,11 +20,12 @@ class UsuarioController extends UsuarioModel{
         $privilegio = MainModel::cleanString($_POST['usuario_privilegio_reg']);
                                                 
         //comprobar que tengan texto
-        if($nombre == '' ||  $apellido== '' ||  $usuario == '' ||  $clave_1== '' ||  $clave_2== ''){
+        if($nombre == '' ||  $apellido== '' ||  $usuario == '' ||  $clave_1== '' 
+        ||  $clave_2== '' || $email == ''){
             $alerta = [
                 "Alerta" => 'simple',
                 "Tipo" => 'error',
-                "Titulo" => 'Ocurrio un error inesperado.',
+                "Titulo" => 'Ocurrió un error inesperado.',
                 "Texto" => 'Faltan campos por llenar.'
             ];
 
@@ -109,31 +110,31 @@ class UsuarioController extends UsuarioModel{
             
         }
         
-        if($email != ""){
-            if (MainModel::checkDat('^[^@]+@[^@]+\.[a-zA-Z]{2,}$',$email)) {
+        
+        if (MainModel::checkDat('^[^@]+@[^@]+\.[a-zA-Z]{2,}$',$email)) {
+            $alerta = [
+                "Alerta" => 'simple',
+                "Tipo" => 'error',
+                "Titulo" => 'El campo EMAIL no coincide con el formato solicitado.',
+                "Texto" => 'No has llenado todos los campos requeridos.'
+            ];
+
+            echo json_encode($alerta);
+            exit();
+        }else{
+            $checkUsuario = MainModel::querySimple("SELECT usuario_email from usuarios WHERE usuario_email = '$email'");
+            if($checkUsuario->rowCount()>1){
                 $alerta = [
                     "Alerta" => 'simple',
                     "Tipo" => 'error',
-                    "Titulo" => 'El campo EMAIL no coincide con el formato solicitado.',
-                    "Texto" => 'No has llenado todos los campos requeridos.'
+                    "Titulo" => 'El campo Email ingresado ya se encuentra.',
+                    "Texto" => 'Cambie en Email por otro.'
                 ];
-    
                 echo json_encode($alerta);
                 exit();
-            }else{
-                $checkUsuario = MainModel::querySimple("SELECT usuario_email from usuarios WHERE usuario_email = '$email'");
-                if($checkUsuario->rowCount()>1){
-                    $alerta = [
-                        "Alerta" => 'simple',
-                        "Tipo" => 'error',
-                        "Titulo" => 'El campo Email ingresado ya se encuentra.',
-                        "Texto" => 'Cambie en Email por otro.'
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }
             }
         }
+        
        
         if($clave_1 != ""){
             if (MainModel::checkDat('[a-zA-Z0-9$@.-]{7,100}', $clave_1)) {
@@ -463,7 +464,7 @@ class UsuarioController extends UsuarioModel{
             $alerta = [
                 "Alerta" => 'simple',
                 "Tipo" => 'error',
-                "Titulo" => 'Ocurrio un error inesperado.',
+                "Titulo" => 'Ocurrió un error inesperado.',
                 "Texto" => 'No has llenado todos los campos requeridos.'
             ];
 
