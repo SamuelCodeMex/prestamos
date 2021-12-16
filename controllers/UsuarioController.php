@@ -37,8 +37,8 @@ class UsuarioController extends UsuarioModel{
             $alerta = [
                 "Alerta" => 'simple',
                 "Tipo" => 'error',
-                "Titulo" => 'El campo APELLIDO no coincide con el formato solicitado.',
-                "Texto" => 'No has llenado todos los campos requeridos.'
+                "Titulo" => 'Ocurrió un error',
+                "Texto" => 'El campo APELLIDO no coincide con el formato solicitado.'
             ];
 
             echo json_encode($alerta);
@@ -48,8 +48,8 @@ class UsuarioController extends UsuarioModel{
             $alerta = [
                 "Alerta" => 'simple',
                 "Tipo" => 'error',
-                "Titulo" => 'El campo APELLIDO no coincide con el formato solicitado.',
-                "Texto" => 'No has llenado todos los campos requeridos.'
+                "Titulo" => 'Ocurrió un error',
+                "Texto" => 'El campo APELLIDO no coincide con el formato solicitado..'
             ];
 
             echo json_encode($alerta);
@@ -60,8 +60,8 @@ class UsuarioController extends UsuarioModel{
                 $alerta = [
                     "Alerta" => 'simple',
                     "Tipo" => 'error',
-                    "Titulo" => 'El campo TELÉFONO no coincide con el formato solicitado.',
-                    "Texto" => 'No has llenado todos los campos requeridos.'
+                    "Titulo" => 'Ocurrió un error',
+                    "Texto" => 'El campo TELÉFONO no coincide con el formato solicitado..'
                 ];
     
                 echo json_encode($alerta);
@@ -74,8 +74,8 @@ class UsuarioController extends UsuarioModel{
                 $alerta = [
                     "Alerta" => 'simple',
                     "Tipo" => 'error',
-                    "Titulo" => 'El campo DIRECCIÓN no coincide con el formato solicitado.',
-                    "Texto" => 'No has llenado todos los campos requeridos.'
+                    "Titulo" => 'Ocurrió un error',
+                    "Texto" => 'El campo DIRECCIÓN no coincide con el formato solicitado.'
                 ];
     
                 echo json_encode($alerta);
@@ -83,52 +83,49 @@ class UsuarioController extends UsuarioModel{
             }
         }
         
-        if($usuario != ""){
-            if (MainModel::checkDat('[a-zA-Z0-9]{1,35}',$usuario)) {
+        
+        if (MainModel::checkDat('[a-zA-Z0-9]{1,35}',$usuario)) {
+            $alerta = [
+                "Alerta" => 'simple',
+                "Tipo" => 'error',
+                "Titulo" => 'Ocurrió un error',
+                "Texto" => 'El campo NOMBRE DE USUARIO no coincide con el formato solicitado.'
+            ];
+
+            echo json_encode($alerta);
+            exit();
+        }else{
+            $checkUsuario = MainModel::querySimple("SELECT usuario_usuario from usuarios WHERE usuario_usuario = '$usuario'");
+            if($checkUsuario->rowCount()>=1){
                 $alerta = [
                     "Alerta" => 'simple',
                     "Tipo" => 'error',
-                    "Titulo" => 'El campo NOMBRE DE USUARIO no coincide con el formato solicitado.',
-                    "Texto" => 'No has llenado todos los campos requeridos.'
+                    "Titulo" => 'Ocurrió un error',
+                    "Texto" => 'El campo NOMBRE DE USUARIO ingresado ya se encuentra. Cambie por otro.'
                 ];
-    
                 echo json_encode($alerta);
                 exit();
-            }else{
-                $checkUsuario = MainModel::querySimple("SELECT usuario_usuario from usuarios WHERE usuario_usuario = '$usuario'");
-                if($checkUsuario->rowCount()>1){
-                    $alerta = [
-                        "Alerta" => 'simple',
-                        "Tipo" => 'error',
-                        "Titulo" => 'El campo NOMBRE DE USUARIO ingresado ya se encuentra.',
-                        "Texto" => 'Cambie en NOMBRE DE USUARIO por otro.'
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }
             }
-            
         }
-        
-        
+            
         if (MainModel::checkDat('^[^@]+@[^@]+\.[a-zA-Z]{2,}$',$email)) {
             $alerta = [
                 "Alerta" => 'simple',
                 "Tipo" => 'error',
-                "Titulo" => 'El campo EMAIL no coincide con el formato solicitado.',
-                "Texto" => 'No has llenado todos los campos requeridos.'
+                "Titulo" => 'Ocurrió un error',
+                "Texto" => 'El campo EMAIL no coincide con el formato solicitado.'
             ];
 
             echo json_encode($alerta);
             exit();
         }else{
             $checkUsuario = MainModel::querySimple("SELECT usuario_email from usuarios WHERE usuario_email = '$email'");
-            if($checkUsuario->rowCount()>1){
+            if($checkUsuario->rowCount()>=1){
                 $alerta = [
                     "Alerta" => 'simple',
                     "Tipo" => 'error',
-                    "Titulo" => 'El campo Email ingresado ya se encuentra.',
-                    "Texto" => 'Cambie en Email por otro.'
+                    "Titulo" => 'Ocurrió un error',
+                    "Texto" => 'El campo Email ingresado ya se encuentra. Cambie en Email por otro.'
                 ];
                 echo json_encode($alerta);
                 exit();
@@ -141,8 +138,8 @@ class UsuarioController extends UsuarioModel{
                 $alerta = [
                     "Alerta" => 'simple',
                     "Tipo" => 'error',
-                    "Titulo" => 'El campo CONTRASEÑA no coincide con el formato solicitado.',
-                    "Texto" => 'No has llenado todos los campos requeridos.'
+                    "Titulo" => 'Ocurrió un error',
+                    "Texto" => 'El campo CONTRASEÑA no coincide con el formato solicitado..'
                 ];
     
                 echo json_encode($alerta);
@@ -156,8 +153,8 @@ class UsuarioController extends UsuarioModel{
                 $alerta = [
                     "Alerta" => 'simple',
                     "Tipo" => 'error',
-                    "Titulo" => 'El campo CONTRASEÑA no coincide con el formato solicitado.',
-                    "Texto" => 'No has llenado todos los campos requeridos.'
+                    "Titulo" => 'Ocurrió un error',
+                    "Texto" => 'El campo CONTRASEÑA no coincide con el formato solicitado.'
                 ];
     
                 echo json_encode($alerta);
@@ -182,8 +179,8 @@ class UsuarioController extends UsuarioModel{
             $alerta = [
                 "Alerta" => 'simple',
                 "Tipo" => 'error',
-                "Titulo" => 'El campo PRIVILEGIO no coincide con el formato solicitado.',
-                "Texto" => $privilegio
+                "Titulo" => 'Ocurrió un error',
+                "Texto" => 'El campo PRIVILEGIO no coincide con el formato solicitado.'
             ];
 
             echo json_encode($alerta);
@@ -575,32 +572,32 @@ class UsuarioController extends UsuarioModel{
             exit();
         }
         //usuario_usuario
-        if($usuario != ""){
-            if (MainModel::checkDat('[a-zA-Z0-9]{1,35}',$usuario)) {
+        
+        if (MainModel::checkDat('[a-zA-Z0-9]{1,35}',$usuario)) {
+            $alerta = [
+                "Alerta" => 'simple',
+                "Tipo" => 'error',
+                "Titulo" => 'El campo NOMBRE DE USUARIO no coincide con el formato solicitado.',
+                "Texto" => 'No has llenado todos los campos requeridos.'
+            ];
+
+            echo json_encode($alerta);
+            exit();
+        }else{
+            $checkUsuario = MainModel::querySimple("SELECT usuario_usuario from usuarios WHERE usuario_usuario = '$usuario'");
+            if($checkUsuario->rowCount()>=1){
                 $alerta = [
                     "Alerta" => 'simple',
                     "Tipo" => 'error',
-                    "Titulo" => 'El campo NOMBRE DE USUARIO no coincide con el formato solicitado.',
-                    "Texto" => 'No has llenado todos los campos requeridos.'
+                    "Titulo" => 'El campo NOMBRE DE USUARIO ingresado ya se encuentra.',
+                    "Texto" => 'Cambie en NOMBRE DE USUARIO por otro.'
                 ];
-    
                 echo json_encode($alerta);
                 exit();
-            }else{
-                $checkUsuario = MainModel::querySimple("SELECT usuario_usuario from usuarios WHERE usuario_usuario = '$usuario'");
-                if($checkUsuario->rowCount()>1){
-                    $alerta = [
-                        "Alerta" => 'simple',
-                        "Tipo" => 'error',
-                        "Titulo" => 'El campo NOMBRE DE USUARIO ingresado ya se encuentra.',
-                        "Texto" => 'Cambie en NOMBRE DE USUARIO por otro.'
-                    ];
-                    echo json_encode($alerta);
-                    exit();
-                }
             }
-            
         }
+            
+        
         //usuario_mail
         //hay actualizacion
         $actualizaEmail = true;
@@ -621,7 +618,7 @@ class UsuarioController extends UsuarioModel{
             }else if( $actualizaEmail){
                 $checkUsuario = MainModel::querySimple("SELECT usuario_email from usuarios 
                 WHERE usuario_email = '$email'");
-                if($checkUsuario->rowCount()>1){
+                if($checkUsuario->rowCount()>=1){
                     $alerta = [
                         "Alerta" => 'simple',
                         "Tipo" => 'error',
